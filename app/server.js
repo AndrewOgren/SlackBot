@@ -55,11 +55,11 @@ console.log(`listening on: ${port}`);
 
 // prepare webhook
 // for now we won't use this but feel free to look up slack webhooks
-// controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
-//   controller.createWebhookEndpoints(webserver, slackbot, () => {
-//     if (err) { throw new Error(err); }
-//   });
-// });
+controller.setupWebserver(3001, (err, webserver) => {
+  controller.createWebhookEndpoints(webserver, slackbot, () => {
+    if (err) { throw new Error(err); }
+  });
+});
 
 controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.api.users.info({ user: message.user }, (err, res) => {
