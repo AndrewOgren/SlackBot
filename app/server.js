@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 
 // START THE SERVER
 // =============================================================================
-const port = process.env.PORT || 9090;
+const port = 9090;
 app.listen(port);
 
 console.log(`listening on: ${port}`);
@@ -55,7 +55,7 @@ console.log(`listening on: ${port}`);
 
 // prepare webhook
 // for now we won't use this but feel free to look up slack webhooks
-controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
+controller.setupWebserver(3001, (err, webserver) => {
   controller.createWebhookEndpoints(webserver, slackbot, () => {
     if (err) { throw new Error(err); }
   });
