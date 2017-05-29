@@ -145,3 +145,7 @@ controller.hears(['help'], ['direct_mention', 'mention', 'direct_message'], (bot
 controller.hears([''], ['direct_mention', 'mention', 'direct_message'], (bot, message) => {
   bot.reply(message, 'Sorry what are you talking about? Try asking for help.');
 });
+
+controller.on('outgoing_webhook', (bot, message) => {
+  bot.replyPublic(message, 'Shut your mouth.');
+});
