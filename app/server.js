@@ -26,8 +26,35 @@ const slackbot = controller.spawn({
 });
 
 
- // prepare webhook
- // for now we won't use this but feel free to look up slack webhooks
+// enable/disable cross origin resource sharing if necessary
+app.use(cors());
+
+app.set('view engine', 'ejs');
+app.use(express.static('static'));
+// enables static assets from folder static
+app.set('views', path.join(__dirname, '../app/views'));
+// this just allows us to render ejs from the ../app/views directory
+
+// enable json message body for posting data to API
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+// default index route
+app.get('/', (req, res) => {
+  res.send('hi');
+});
+
+// START THE SERVER
+// =============================================================================
+const port = process.env.PORT || 9090;
+app.listen(port);
+
+console.log(`listening on: ${port}`);
+
+
+// prepare webhook
+// for now we won't use this but feel free to look up slack webhooks
 controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
   controller.createWebhookEndpoints(webserver, slackbot, () => {
     if (err) { throw new Error(err); }
@@ -46,9 +73,9 @@ controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 
 
 let yelpClient;
 yelp.accessToken(process.env.YELP_CLIENT_ID, process.env.YELP_CLIENT_SECRET)
-    .then((res) => {
-      yelpClient = yelp.client(res.jsonBody.access_token);
-    });
+   .then((res) => {
+     yelpClient = yelp.client(res.jsonBody.access_token);
+   });
 
 
 let foodType = '';
@@ -118,29 +145,3 @@ controller.hears(['help'], ['direct_mention', 'mention', 'direct_message'], (bot
 controller.hears([''], ['direct_mention', 'mention', 'direct_message'], (bot, message) => {
   bot.reply(message, 'Sorry what are you talking about? Try asking for help.');
 });
-
-// enable/disable cross origin resource sharing if necessary
-app.use(cors());
-
-app.set('view engine', 'ejs');
-app.use(express.static('static'));
-// enables static assets from folder static
-app.set('views', path.join(__dirname, '../app/views'));
-// this just allows us to render ejs from the ../app/views directory
-
-// enable json message body for posting data to API
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-
-// default index route
-app.get('/', (req, res) => {
-  res.send('hi');
-});
-
-// START THE SERVER
-// =============================================================================
-const port = process.env.PORT || 9090;
-app.listen(port);
-
-console.log(`listening on: ${port}`);
