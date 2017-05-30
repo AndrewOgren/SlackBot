@@ -1,9 +1,7 @@
-# starter express app template
+# Slack Bot
+I made a slack bot that allows you to search for food in the area by incorporating Yelp's api. 
 
-* node with babel
-* expressjs
-* airbnb eslint rules
-
-Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+![alt text](https://github.com/AndrewOgren/SlackBot/blob/master/static/images/screencap1.png "Screenshot 1")
+![alt text](https://github.com/AndrewOgren/SlackBot/blob/master/static/images/screencap2.png "Screenshot 2")
 
 
